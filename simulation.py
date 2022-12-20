@@ -1,6 +1,8 @@
-from modules import Player, simulator_basic
+from modules import Player, Game, simulator_basic
 import pandas as pd
 import time
+
+Game.LIFESTYLE_BONUSES[5] = 5
 
 players = [
     Player('p10', 100000, 10),
