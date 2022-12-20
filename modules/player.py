@@ -18,7 +18,9 @@ class Player:
         'wild',
         'death',
         'super_death',
-        'longest_suit_count'
+        'longest_suit_count',
+        'best_payout',
+        'best_payout_card_count'
     ]
 
     def __init__(self, name=None, bank=0, bet=None):
@@ -91,4 +93,6 @@ class Player:
                 self.game_data['cards']['death'],
                 self.game_data['cards']['super_death'],
                 self.game_data['cards']['longest_suit_count'],
+                self.game_data['cards']['best_payout'],
+                self.game_data['cards']['best_payout_card_count']
             ]
