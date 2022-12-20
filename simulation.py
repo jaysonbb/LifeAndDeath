@@ -10,7 +10,7 @@ players = [
     Player('p250', 100000, 250),
 ]
 
-game_data, player_data = simulator_basic(players, 10000, verbose=False)
+game_data, player_data = simulator_basic(players, 100000, verbose=True)
 
 game_df = pd.DataFrame(game_data['data'], columns=game_data['headers'])
 player_df = pd.DataFrame(player_data['data'], columns=player_data['headers'])
