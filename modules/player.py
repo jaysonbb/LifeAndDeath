@@ -19,13 +19,12 @@ class Player:
         'death',
         'super_death',
         'longest_suit_count',
-        'best_payout',
-        'best_payout_card_count'
     ]
 
     def __init__(self, name=None, bank=0, bet=None):
         self.name = name
         self.bank = bank
+        self.best_case_bank = bank
         self.bet = bet
         self.is_active = True
         self.game_data = None
@@ -51,18 +50,21 @@ class Player:
         self._bank = val
 
     def settle_bet(self, game):
+        self.bank -= self.bet
         self.is_active = False
-        total_return = (game.total_payout * self.bet) - self.bet
+        total_return = (game.total_payout * self.bet)
         if game.is_active:
             total_return += self.bet
         self.bank += total_return
-        
+
         self.game_data = game.get_data(format='dict')
+
+
         self.game_data['player'] = {
             'player':self.name,
             'bet':self.bet,
             'total_return':total_return,
-            'bank_remaining':self.bank
+            'bank_remaining':self.bank,
         }
 
     def get_data(self, format='dict'):
@@ -72,6 +74,7 @@ class Player:
             raise ValueError(f'Player has no data for current game.')
 
         if format == 'dict':
+            self.game_data['']
             return self.game_data
         elif format == 'array':
             return [
@@ -93,6 +96,4 @@ class Player:
                 self.game_data['cards']['death'],
                 self.game_data['cards']['super_death'],
                 self.game_data['cards']['longest_suit_count'],
-                self.game_data['cards']['best_payout'],
-                self.game_data['cards']['best_payout_card_count']
             ]

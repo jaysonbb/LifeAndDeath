@@ -27,8 +27,6 @@ class Game:
         'death',
         'super_death',
         'longest_suit_count',
-        'best_payout',
-        'best_payout_card_count',
     ]
 
     def __init__(self, game_number=None):
@@ -37,10 +35,9 @@ class Game:
         self.is_active = True
         self.suits_drawn = {}
         self.payout = 0
+        self.potential_payout = 0
         self.lifestyle_bonus = 0
         self.total_payout = 0
-        self.best_payout = 0
-        self.best_payout_card_count = 0
 
     def calculate_payouts(self):
         self.payout = 0
@@ -65,6 +62,7 @@ class Game:
         self.total_payout = self.payout
         if self.deck.death_drawn:
             self.total_payout += self.lifestyle_bonus
+
         self.lifestyle_bonus = round(self.lifestyle_bonus, 1)
         self.payout = round(self.payout, 1)
         self.total_payout = round(self.total_payout, 1)
@@ -75,9 +73,6 @@ class Game:
             if card.is_death:
                 self.is_active = False
         self.calculate_payouts()
-        if self.payout > self.best_payout:
-            self.best_payout = self.payout
-            self.best_payout_card_count = self.deck.drawn
 
     def play(self):
         while self.is_active:
@@ -113,8 +108,6 @@ class Game:
                 'death':1 if self.deck.death_drawn else 0,
                 'super_death':1 if self.deck.super_death_drawn else 0,
                 'longest_suit_count':longest,
-                'best_payout':self.best_payout,
-                'best_payout_card_count':self.best_payout_card_count
             }
             data['payouts'] = {
                 'payout':self.payout,
@@ -142,8 +135,6 @@ class Game:
                 1 if self.deck.death_drawn else 0,
                 1 if self.deck.super_death_drawn else 0,
                 longest,
-                self.best_payout,
-                self.best_payout_card_count
-                ]
+            ]
 
         return data

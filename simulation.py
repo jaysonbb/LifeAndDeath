@@ -1,18 +1,18 @@
-from modules import Player, Game, simulator_basic
+from modules import Player, Game, Simulation
 import pandas as pd
 import time
 
 Game.LIFESTYLE_BONUSES[5] = 5
 
 players = [
-    Player('p10', 100000, 10),
-    Player('p20', 100000, 20),
-    Player('p50', 100000, 50),
-    Player('p100', 100000, 100),
-    Player('p250', 100000, 250),
+    Player('p10', 10000, 10),
+    Player('p20', 10000, 20),
+    Player('p50', 10000, 50),
+    Player('p100', 10000, 100),
+    Player('p250', 10000, 250),
 ]
 
-game_data, player_data = simulator_basic(players, 10000, verbose=True)
+game_data, player_data = Simulation(players).run(plays=20000, verbose=True)
 
 game_df = pd.DataFrame(game_data['data'], columns=game_data['headers'])
 player_df = pd.DataFrame(player_data['data'], columns=player_data['headers'])
