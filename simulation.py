@@ -1,21 +1,37 @@
 from modules import Player, Game, Simulation
 import pandas as pd
-import time
 
-Game.LIFESTYLE_BONUSES[5] = 5
+# cards of a kind : bonus,
+Game.LIFESTYLE_BONUSES = {
+    0 :0,
+    1: 0,
+    2: 0.1,
+    3: 0.5,
+    4: 1,
+    5: 5,
+    6: 10
+}
 
 players = [
-    Player('p10', 10000, 10),
-    Player('p20', 10000, 20),
-    Player('p50', 10000, 50),
-    Player('p100', 10000, 100),
-    Player('p250', 10000, 250),
+    # create players here separated by commas. must have at least one
+    Player(name='p10',  bank=100000, bet=10),
+    Player(name='p20',  bank=100000, bet=20),
+    Player(name='p50',  bank=100000, bet=50),
+    Player(name='p100', bank=100000, bet=100),
+    Player(name='p250', bank=100000, bet=250),
 ]
 
-game_data, player_data = Simulation(players).run(plays=20000, verbose=True)
+# number of games to simulate 
+plays = 20000
 
+# data file destinations (must be .csv file)
+game_data_file_name =   'data/game_data.csv'
+player_data_file_name = 'data/player_data.csv'
+
+
+# don't change anything here
+game_data, player_data = Simulation(players).run(plays=plays, verbose=True)
 game_df = pd.DataFrame(game_data['data'], columns=game_data['headers'])
 player_df = pd.DataFrame(player_data['data'], columns=player_data['headers'])
-
-game_df.to_csv('data/game_data.csv', index=False)
-player_df.to_csv('data/player_data.csv', index=False)
+game_df.to_csv(game_data_file_name, index=False)
+player_df.to_csv(player_data_file_name, index=False)
