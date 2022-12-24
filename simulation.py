@@ -22,7 +22,7 @@ players = [
 ]
 
 # number of games to simulate 
-plays = 20000
+plays = 10
 
 # data file destinations (must be .csv file)
 game_data_file_name =   'data/game_data.csv'
