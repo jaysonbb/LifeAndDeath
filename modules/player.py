@@ -1,3 +1,4 @@
+from .game import Game
 class Player:
 
     DATA_HEADERS = [
@@ -24,7 +25,6 @@ class Player:
     def __init__(self, name=None, bank=0, bet=None):
         self.name = name
         self.bank = bank
-        self.best_case_bank = bank
         self.bet = bet
         self.is_active = True
         self.game_data = None
@@ -50,15 +50,11 @@ class Player:
         self._bank = val
 
     def settle_bet(self, game):
-        self.bank -= self.bet
         self.is_active = False
         total_return = (game.total_payout * self.bet)
-        if game.is_active:
-            total_return += self.bet
         self.bank += total_return
 
         self.game_data = game.get_data(format='dict')
-
 
         self.game_data['player'] = {
             'player':self.name,
@@ -79,7 +75,7 @@ class Player:
         elif format == 'array':
             return [
                 self.name,
-                self.game_data['meta']['game_number'],
+                self.game_data['payouts']['game_number'],
                 self.bet,
                 self.game_data['payouts']['payout'],
                 self.game_data['payouts']['lifestyle_bonus'],

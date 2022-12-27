@@ -62,6 +62,10 @@ class Game:
         self.total_payout = self.payout
         if self.deck.death_drawn:
             self.total_payout += self.lifestyle_bonus
+            if self.total_payout == 0:
+                self.total_payout = -1
+        else:
+            self.total_payout += 1
 
         self.lifestyle_bonus = round(self.lifestyle_bonus, 1)
         self.payout = round(self.payout, 1)
@@ -107,16 +111,14 @@ class Game:
                 'wild':self.deck.wilds_drawn,
                 'death':1 if self.deck.death_drawn else 0,
                 'super_death':1 if self.deck.super_death_drawn else 0,
-                'longest_suit_count':longest,
+                'longest_suit_count':longest
             }
             data['payouts'] = {
+                'game_number':self.game_number,
                 'payout':self.payout,
                 'lifestyle_bonus':self.lifestyle_bonus,
                 'total_payout':self.total_payout,
                 'lifestyle_bonuses':lifestyle_bonuses,
-            }
-            data['meta'] = {
-                'game_number':self.game_number
             }
         
         elif format == 'array':
